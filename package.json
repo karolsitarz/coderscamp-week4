@@ -1,0 +1,29 @@
+{
+  "name": "coderscamp-week4",
+  "version": "1.0.0",
+  "description": "A node.js to-do system.",
+  "main": "index.js",
+  "scripts": {
+    "run": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karolsitarz/coderscamp-week4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karolsitarz/coderscamp-week4/issues"
+  },
+  "homepage": "https://github.com/karolsitarz/coderscamp-week4#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.8",
+    "semistandard": "^13.0.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.0",
+    "mongoose": "^5.3.15"
+  }
+}
