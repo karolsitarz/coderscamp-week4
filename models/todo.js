@@ -3,13 +3,13 @@ const Joi = require('joi');
 
 const Todo = mongoose.model('todos',
   new mongoose.Schema({
-    // model notatki
+    // todo model
   })
 );
 
 const validate = todo => {
   return Joi.validate(todo, {
-    // walidacja
+    // validation
   });
 };
 
