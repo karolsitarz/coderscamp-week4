@@ -7,7 +7,12 @@ const router = express.Router();
 
 // create user
 router.post('/', async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } =
+    Joi.validate(req.body, {
+      email: Joi.string().min(3).max(200).required().email(),
+      password: Joi.string().min(5).max(100).required()
+    });
+
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
@@ -19,14 +24,6 @@ router.post('/', async (req, res) => {
   // just a educational-purposes project, don't have to export secretKey to env
   const token = jwt.sign({ _id: user._id }, 'secretKey');
   // save the token as a cookie, for future authorization
-  res.send(token);
+  res.cookie('login-token', token).send('You are logged in!');
 });
-
-const validate = req => {
-  return Joi.validate(req, {
-    email: Joi.string().min(3).max(200).required().email(),
-    password: Joi.string().min(5).max(100).required()
-  });
-};
-
 module.exports = router;
