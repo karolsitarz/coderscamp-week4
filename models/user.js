@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-const User = mongoose.model('User',
+const User = mongoose.model('users',
   new mongoose.Schema({
     name: {
       type: String,
@@ -26,8 +26,8 @@ const User = mongoose.model('User',
   })
 );
 
-const validate = customer => {
-  return Joi.validate(customer, {
+const validate = user => {
+  return Joi.validate(user, {
     name: Joi.string().min(3).max(50).required(),
     email: Joi.string().min(3).max(200).required().email(),
     password: Joi.string().min(5).max(100).required()
