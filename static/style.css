@@ -1,0 +1,120 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+*,
+::after,
+::before {
+  position: relative;
+  box-sizing: border-box;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+
+
+#user {
+  background: #2433404a;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 4em;
+  background: #fff;
+  border-radius: 2em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%,-50%,0);
+  min-width: 30vw;
+  max-width: 95vw;
+  transition:
+    opacity .3s ease,
+    transform .3s ease;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: .5em;
+  width: 100%;
+}
+label > span {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+}
+input[type="email"], input[type="text"], input[type="password"] {
+  padding: .75em 1em;
+  border: none;
+  border-radius: 2em;
+  background: #00000011;
+  outline: none;
+  text-align: center;
+  width: 100%;
+}
+.btn {
+  padding: 1em 3em;
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 2em;
+  font-size: .75em;
+  margin-top: 2em;
+  background: #486c8c;
+  color: #fff;
+  cursor: pointer;
+}
+label[for="user-controller"] {
+  text-transform: uppercase;
+  font-size: .75em;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 2em;
+  color: #486c8c;
+  cursor: pointer;
+}
+
+#user-controller:checked ~ [name="register"] {
+  transform: translate3d(calc(-50% + 1em),-50%,0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#user-controller:not(:checked) ~ [name="login"] {
+  transform: translate3d(calc(-50% - 1em),-50%,0);
+  opacity: 0;
+  pointer-events: none;
+}

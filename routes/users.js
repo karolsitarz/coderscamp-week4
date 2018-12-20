@@ -44,6 +44,7 @@ router.get('/:id', async (req, res) => {
 
 // edit user
 router.put('/:id', authorize, async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
   if (req.userID !== req.params.id) return res.status(403).send("Can't edit other users.");
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -61,6 +62,7 @@ router.put('/:id', authorize, async (req, res) => {
 
 // delete user
 router.delete('/:id', authorize, async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
   if (req.userID !== req.params.id) return res.status(403).send("Can't delete other users.");
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).send('There is no todo with this id.');

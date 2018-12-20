@@ -20,6 +20,7 @@ app.use('/api/users', users);
 app.use('/api/todos', todos);
 app.use('/api/auth', auth);
 app.use('/api/logout', logout);
+app.use('/', express.static('./static/'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on ${port}...`));

@@ -5,6 +5,8 @@ const router = express.Router();
 
 // Read all todos
 router.get('/', async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
+
   const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 
@@ -14,6 +16,8 @@ router.get('/', async (req, res) => {
 });
 // Read single todo
 router.get('/:id', async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
+
   const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 
@@ -30,6 +34,8 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  if (!req.userID) return res.status(403).send('Access denied.');
+
   const todo = new Todo({
     text: req.body.text
   });
@@ -45,6 +51,8 @@ router.post('/', async (req, res) => {
 
 // Update todo
 router.put('/:id', async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
+
   const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 
@@ -65,6 +73,8 @@ router.put('/:id', async (req, res) => {
 
 // Delete todo
 router.delete('/:id', async (req, res) => {
+  if (!req.userID) return res.status(403).send('Access denied.');
+
   const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 

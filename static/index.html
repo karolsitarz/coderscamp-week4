@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ToDo List</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div id="wrapper">
+    <section id="todo">
+
+    </section>
+    <section id="user">
+      <div class="input-container">
+        <input type="checkbox" id="user-controller">
+        <form name="register" class="input-box" autocomplete="off">
+          <label>
+            <span>name</span>
+            <input name="name" type="text" maxlength="50" required />
+          </label>
+          <label>
+            <span>email</span>
+            <input name="email" type="email" maxlength="200" required />
+          </label>
+          <label>
+            <span>password</span>
+            <input name="password" type="password" maxlength="100" required />
+          </label>
+          <input type="submit" value="Create User" class="btn" />
+          <label for="user-controller">I already have an account</label>
+        </form>
+        <form name="login" class="input-box" autocomplete="off">
+          <label>
+            <span>email</span>
+            <input name="email" type="email" maxlength="200" required />
+          </label>
+          <label>
+            <span>password</span>
+            <input name="password" type="password" maxlength="100" required />
+          </label>
+          <input type="submit" value="Login" class="btn" />
+          <label for="user-controller">I want to create an account</label>
+        </form>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
