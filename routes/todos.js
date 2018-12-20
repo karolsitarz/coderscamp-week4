@@ -3,16 +3,22 @@ const { User } = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
-const authorize = require('../middleware/auth');
-
 // Read all todos
 router.get('/', async (req, res) => {
-  const todos = await Todo.find();
+  const user = await User.findById(req.userID);
+  if (!user) return res.status(404).send('User retrieval error.');
+
+  const todos = await Todo.find({ '_id': { $in: user.todoList } });
 
   res.send(todos);
 });
 // Read single todo
 router.get('/:id', async (req, res) => {
+  const user = await User.findById(req.userID);
+  if (!user) return res.status(404).send('User retrieval error.');
+
+  if (user.todoList.indexOf(req.params.id) === -1) return res.status(403).send("The user doesn't own this task.");
+
   const todo = await Todo.findById(req.params.id);
   if (!todo) return res.status(404).send('There is no todo with this id.');
 
@@ -20,15 +26,14 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create new todo
-
-router.post('/', authorize, async (req, res) => {
+router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const todo = new Todo({
     text: req.body.text
   });
-  const user = await User.findById(req.userID).select('todoList');
+  const user = await User.findById(req.userID);
 
   const result = await todo.save();
 
@@ -39,11 +44,11 @@ router.post('/', authorize, async (req, res) => {
 });
 
 // Update todo
-router.put('/:id', authorize, async (req, res) => {
-  const user = await User.findById(req.userID).select('todoList');
+router.put('/:id', async (req, res) => {
+  const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 
-  if (!user.includes(req.params.id)) return res.status(403).send("The user doesn't own this task.");
+  if (user.todoList.indexOf(req.params.id) === -1) return res.status(403).send("The user doesn't own this task.");
 
   const todo = await Todo.findById(req.params.id);
   if (!todo) return res.status(404).send('There is no todo with this id.');
@@ -59,8 +64,8 @@ router.put('/:id', authorize, async (req, res) => {
 });
 
 // Delete todo
-router.delete('/:id', authorize, async (req, res) => {
-  const user = await User.findById(req.userID).select('todoList');
+router.delete('/:id', async (req, res) => {
+  const user = await User.findById(req.userID);
   if (!user) return res.status(404).send('User retrieval error.');
 
   if (user.todoList.indexOf(req.params.id) === -1) return res.status(403).send("The user doesn't own this task.");

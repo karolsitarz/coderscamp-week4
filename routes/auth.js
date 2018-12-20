@@ -15,6 +15,8 @@ router.post('/', async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  if (req.userID != null) return res.status(400).send('You are already logged in!');
+
   let user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Invalid email or password.');
 

@@ -3,10 +3,13 @@ const { User, validate } = require('../models/user');
 const express = require('express');
 const router = express.Router();
 const authorize = require('../middleware/auth');
+
 // create user
-router.post('/', async (req, res) => {
+router.post('/', authorize, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+  if (req.userID != null) return res.status(400).send('You are already logged in!');
 
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send('User already registered.');
@@ -41,7 +44,7 @@ router.get('/:id', async (req, res) => {
 
 // edit user
 router.put('/:id', authorize, async (req, res) => {
-  if (req.userID !== req.params.id) return res.status(404).send('It is not your id.');
+  if (req.userID !== req.params.id) return res.status(403).send("Can't edit other users.");
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -53,10 +56,10 @@ router.put('/:id', authorize, async (req, res) => {
   const result = await user.save();
   res.send(result);
 });
-// delete user
 
-router.delete('/:id', async (req, res) => {
-  if (req.userID !== req.params.id) return res.status(404).send('It is not your id.');
+// delete user
+router.delete('/:id', authorize, async (req, res) => {
+  if (req.userID !== req.params.id) return res.status(403).send("Can't delete other users.");
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).send('There is no todo with this id.');
 
