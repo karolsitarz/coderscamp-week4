@@ -6,8 +6,8 @@ const Todo = mongoose.model('todos',
     text: {
       type: String,
       required: true,
-      minlength : 1,
-      maxlength : 200
+      minlength: 1,
+      maxlength: 200
     },
     status: {
       type: String,
@@ -19,8 +19,8 @@ const Todo = mongoose.model('todos',
 
 const validate = todo => {
   return Joi.validate(todo, {
-      text: Joi.string().required().min(1).max(200),
-      status: Joi.string().required().valid('active', 'done')
+    text: Joi.string().required().min(1).max(200),
+    status: Joi.string().required().valid('active', 'done')
   });
 };
 
