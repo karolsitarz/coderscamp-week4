@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const users = require('./routes/users');
 const todos = require('./routes/todos');
-const authorize = require('./routes/authorize');
+const authorize = require('./routes/auth');
 const logout = require('./routes/logout');
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
