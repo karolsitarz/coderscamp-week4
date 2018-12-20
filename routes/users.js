@@ -40,7 +40,26 @@ router.get('/:id', async (req, res) => {
 });
 
 // edit user
+router.put('/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).send('There is no todo with this id.');
 
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  user.name = req.body.name;
+  user.email = req.body.email;
+  user.password = req.body.password;
+
+  const result = await user.save();
+  res.send(result);
+});
 // delete user
+router.delete('/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).send('There is no todo with this id.');
 
+  const result = await user.remove();
+  res.send(result);
+});
 module.exports = router;
