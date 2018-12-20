@@ -25,8 +25,6 @@ router.post('/', authorize, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  if (!req.userID) return res.status(403).send('The provided access token is not valid.');
-
   const todo = new Todo({
     text: req.body.text
   });
@@ -41,7 +39,12 @@ router.post('/', authorize, async (req, res) => {
 });
 
 // Update todo
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorize, async (req, res) => {
+  const user = await User.findById(req.userID).select('todoList');
+  if (!user) return res.status(404).send('User retrieval error.');
+
+  if (!user.includes(req.params.id)) return res.status(403).send("The user doesn't own this task.");
+
   const todo = await Todo.findById(req.params.id);
   if (!todo) return res.status(404).send('There is no todo with this id.');
 
@@ -56,7 +59,12 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete todo
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorize, async (req, res) => {
+  const user = await User.findById(req.userID).select('todoList');
+  if (!user) return res.status(404).send('User retrieval error.');
+
+  if (user.todoList.indexOf(req.params.id) === -1) return res.status(403).send("The user doesn't own this task.");
+
   const todo = await Todo.findById(req.params.id);
   if (!todo) return res.status(404).send('There is no todo with this id.');
 
