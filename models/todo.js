@@ -12,6 +12,7 @@ const Todo = mongoose.model('todos',
     status: {
       type: String,
       required: true,
+      default: 'active',
       enum: ['active', 'done']
     }
   })
@@ -20,7 +21,7 @@ const Todo = mongoose.model('todos',
 const validate = todo => {
   return Joi.validate(todo, {
     text: Joi.string().required().min(1).max(200),
-    status: Joi.string().required().valid('active', 'done')
+    status: Joi.string().default('active').valid('active', 'done')
   });
 };
 
