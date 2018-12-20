@@ -29,11 +29,14 @@ router.post('/', async (req, res) => {
 
 // get user by id
 router.get('/:id', async (req, res) => {
-  res.send(await User.findById(req.params.id).select({
+  const user = await User.findById(req.params.id).select({
     'name': 1,
     'email': 1,
     'todoList': 1
-  }));
+  });
+  if (!user) return res.status(404).send('There is no user with this id.');
+
+  res.send(user);
 });
 
 // edit user
