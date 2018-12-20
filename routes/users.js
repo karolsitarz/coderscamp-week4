@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const { User, validate } = require('../models/user');
 const express = require('express');
 const router = express.Router();
-
+const authorize = require('../middleware/auth');
 // create user
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
@@ -40,13 +40,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // edit user
-router.put('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) return res.status(404).send('There is no todo with this id.');
-
+router.put('/:id', authorize, async (req, res) => {
+  if (req.userID !== req.params.id) return res.status(404).send('It is not your id.');
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const user = await User.findById(req.params.id);
   user.name = req.body.name;
   user.email = req.body.email;
   user.password = req.body.password;
@@ -55,7 +54,9 @@ router.put('/:id', async (req, res) => {
   res.send(result);
 });
 // delete user
+
 router.delete('/:id', async (req, res) => {
+  if (req.userID !== req.params.id) return res.status(404).send('It is not your id.');
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).send('There is no todo with this id.');
 
