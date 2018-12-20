@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const users = require('./routes/users');
 const todos = require('./routes/todos');
-const authorize = require('./routes/authorize');
+const auth = require('./routes/auth');
 const logout = require('./routes/logout');
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(require('cookie-parser')());
 app.use('/api/users', users);
 app.use('/api/todos', todos);
-app.use('/api/authorize', authorize);
+app.use('/api/auth', auth);
 app.use('/api/logout', logout);
 
 const port = process.env.PORT || 3000;
