@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 app.use(express.json());
 app.use(require('cookie-parser')());
-app.use('/api/todos', authorize);
+app.use(['/api/todos', '/api/auth'], authorize);
 app.use('/api/users', users);
 app.use('/api/todos', todos);
 app.use('/api/auth', auth);

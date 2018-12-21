@@ -108,13 +108,13 @@ label[for="user-controller"] {
 }
 
 #user-controller:checked ~ [name="register"] {
-  transform: translate3d(calc(-50% + 1em),-50%,0);
+  transform: translate3d(calc(-50% + 3em),-50%,0);
   opacity: 0;
   pointer-events: none;
 }
 
 #user-controller:not(:checked) ~ [name="login"] {
-  transform: translate3d(calc(-50% - 1em),-50%,0);
+  transform: translate3d(calc(-50% - 3em),-50%,0);
   opacity: 0;
   pointer-events: none;
 }

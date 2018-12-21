@@ -14,22 +14,26 @@ router.post('/', async (req, res) => {
     });
 
   if (error) return res.status(400).json(error.details[0].message);
-  console.log(1);
 
   if (req.userID != null) return res.status(400).json('You are already logged in!');
-  console.log(2);
 
   let user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).json('Invalid email or password.');
-  console.log(3);
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).json('Invalid email or password.');
-  console.log(4);
 
   // just a educational-purposes project, don't have to export secretKey to env
   const token = jwt.sign({ _id: user._id }, 'secretKey');
   // save the token as a cookie, for future authorization
   res.cookie('login-token', token).json('You are logged in!');
 });
+
+router.get('/', async (req, res) => {
+  let user = await User.findById(req.userID);
+  if (!user) return res.status(400).json('Authentication by cookie unsuccessful.');
+
+  res.json('Successfully logged in.');
+});
+
 module.exports = router;
