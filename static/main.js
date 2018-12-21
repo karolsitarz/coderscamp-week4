@@ -15,7 +15,7 @@ document.forms.register.addEventListener('submit', async function (e) {
       password: this.password.value
     })
   });
-  console.log(res.body);
+  console.log(await res.json());
 });
 
 document.forms.login.addEventListener('submit', async function (e) {
@@ -32,5 +32,5 @@ document.forms.login.addEventListener('submit', async function (e) {
       password: this.password.value
     })
   });
-  console.log(res);
+  console.log(await res.json());
 });

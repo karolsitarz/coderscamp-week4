@@ -7,12 +7,12 @@ const authorize = require('../middleware/auth');
 // create user
 router.post('/', authorize, async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json(error.details[0].message);
 
-  if (req.userID != null) return res.status(400).send('You are already logged in!');
+  if (req.userID != null) return res.status(400).json('You are already logged in!');
 
   let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send('User already registered.');
+  if (user) return res.status(400).json('User already registered.');
 
   user = new User({
     name: req.body.name,
@@ -23,7 +23,7 @@ router.post('/', authorize, async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  res.send({
+  res.json({
     _id: user._id,
     name: user.name,
     email: user.email
@@ -37,17 +37,17 @@ router.get('/:id', async (req, res) => {
     'email': 1,
     'todoList': 1
   });
-  if (!user) return res.status(404).send('There is no user with this id.');
+  if (!user) return res.status(404).json('There is no user with this id.');
 
-  res.send(user);
+  res.json(user);
 });
 
 // edit user
 router.put('/:id', authorize, async (req, res) => {
-  if (!req.userID) return res.status(403).send('Access denied.');
-  if (req.userID !== req.params.id) return res.status(403).send("Can't edit other users.");
+  if (!req.userID) return res.status(403).json('Access denied.');
+  if (req.userID !== req.params.id) return res.status(403).json("Can't edit other users.");
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json(error.details[0].message);
 
   const user = await User.findById(req.params.id);
   user.name = req.body.name;
@@ -57,17 +57,17 @@ router.put('/:id', authorize, async (req, res) => {
   user.password = await bcrypt.hash(req.body.password, salt);
 
   const result = await user.save();
-  res.send(result);
+  res.json(result);
 });
 
 // delete user
 router.delete('/:id', authorize, async (req, res) => {
-  if (!req.userID) return res.status(403).send('Access denied.');
-  if (req.userID !== req.params.id) return res.status(403).send("Can't delete other users.");
+  if (!req.userID) return res.status(403).json('Access denied.');
+  if (req.userID !== req.params.id) return res.status(403).json("Can't delete other users.");
   const user = await User.findById(req.params.id);
-  if (!user) return res.status(404).send('There is no todo with this id.');
+  if (!user) return res.status(404).json('There is no todo with this id.');
 
   const result = await user.remove();
-  res.send(result);
+  res.json(result);
 });
 module.exports = router;
