@@ -153,6 +153,11 @@ label[for="user-controller"] {
   border-radius: 0.5em;
   box-shadow: inset 0 0 0 3px var(--main);
   margin-right: 1em;
+  cursor: pointer;
+  transition: box-shadow .3s ease;
+}
+.tasks-single[data-done] > .tasks-single-checkbox {
+  box-shadow: inset 0 0 0 0.75em var(--main);
 }
 .tasks-single input[type="checkbox"] {
   display: none;

@@ -53,13 +53,32 @@
   });
 
   document.getElementById('tasks').addEventListener('click', async e => {
-    if (e.target && e.target.closest('.tasks-trash')) {
-      const id = e.target.closest('.tasks-single').dataset.todoid;
+    if (e.target && e.target.closest('.tasks-single-checkbox')) {
+      const { todoid, done } = e.target.closest('.tasks-single').dataset;
 
       try {
-        await fetchAPI(`/todos/${id}`, 'DELETE');
+        await fetchAPI(`/todos/${todoid}`, 'PUT', {
+          status: done !== undefined ? 'active' : 'done'
+        });
         
-        document.querySelector(`#tasks .tasks-single[data-todoid="${id}"]`).remove();
+        if (done !== undefined)
+          delete document.querySelector(`#tasks .tasks-single[data-todoid="${todoid}"]`).dataset.done;
+        else
+          document.querySelector(`#tasks .tasks-single[data-todoid="${todoid}"]`).dataset.done = '';
+      } catch (ex) {
+        window.alert(ex.message);
+      }
+    }
+  });
+
+  document.getElementById('tasks').addEventListener('click', async e => {
+    if (e.target && e.target.closest('.tasks-trash')) {
+      const { todoid } = e.target.closest('.tasks-single').dataset;
+
+      try {
+        await fetchAPI(`/todos/${todoid}`, 'DELETE');
+        
+        document.querySelector(`#tasks .tasks-single[data-todoid="${todoid}"]`).remove();
       } catch (ex) {
         window.alert(ex.message);
       }

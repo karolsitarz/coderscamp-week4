@@ -61,6 +61,9 @@ router.put('/:id', async (req, res) => {
   const todo = await Todo.findById(req.params.id);
   if (!todo) return res.status(404).json('There is no todo with this id.');
 
+  // set previous value for edit, if untouched
+  if (req.body.text == null) req.body.text = todo.text;
+
   const { error } = validate(req.body);
   if (error) res.status(400).json(error.details[0].message);
 
