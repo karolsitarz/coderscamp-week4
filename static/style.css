@@ -14,11 +14,16 @@ body {
   color: #333;
   font-family: 'Montserrat', sans-serif;
 }
+:root {
+  --main: #4396ff;
+}
 
 #wrapper {
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #eff3f7;
+  font-size: 1.25em;
+  font-weight: bold;
 }
 
 section {
@@ -45,14 +50,14 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2em 4em;
+  padding: 3em;
   background: #fff;
   border-radius: 2em;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate3d(-50%,-50%,0);
-  min-width: 30vw;
+  min-width: 35vw;
   max-width: 95vw;
   transition:
     opacity .3s ease,
@@ -64,16 +69,15 @@ section {
   justify-content: center;
   align-items: center;
 }
-label {
+#user label.input-label {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: .5em;
   width: 100%;
 }
-label > span {
+#user label > span {
   text-transform: uppercase;
-  font-weight: bold;
   font-size: 0.75em;
 }
 input[type="email"], input[type="text"], input[type="password"] {
@@ -84,6 +88,7 @@ input[type="email"], input[type="text"], input[type="password"] {
   outline: none;
   text-align: center;
   width: 100%;
+  font-size: 1rem;
 }
 .btn {
   padding: 1em 3em;
@@ -93,7 +98,7 @@ input[type="email"], input[type="text"], input[type="password"] {
   border-radius: 2em;
   font-size: .75em;
   margin-top: 2em;
-  background: #486c8c;
+  background: var(--main);
   color: #fff;
   cursor: pointer;
 }
@@ -101,9 +106,8 @@ label[for="user-controller"] {
   text-transform: uppercase;
   font-size: .75em;
   text-align: center;
-  font-weight: bold;
   margin-top: 2em;
-  color: #486c8c;
+  color: var(--main);
   cursor: pointer;
 }
 
@@ -117,4 +121,38 @@ label[for="user-controller"] {
   transform: translate3d(calc(-50% - 3em),-50%,0);
   opacity: 0;
   pointer-events: none;
+}
+
+
+.todo-container {
+  height: 100%;
+  width: 100%;
+  max-width: 900px;
+  background: #fff;
+  overflow: hidden;
+}
+.todo-container > nav {
+  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0 0px 1em #00000015;
+  color: #fff;
+  background: var(--main);
+}
+.tasks-single {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2em;
+  box-shadow: 0 1px #0000000F;
+}
+.tasks-single > .tasks-single-checkbox {
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 0.5em;
+  box-shadow: inset 0 0 0 3px var(--main);
+  margin-right: 1em;
+}
+.tasks-single input[type="checkbox"] {
+  display: none;
 }

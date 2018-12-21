@@ -1,8 +1,4 @@
 (async function () {
-  const renderView = () => {
-    if (document.getElementById('user')) document.getElementById('user').remove();
-  };
-
   const fetchAPI = async (url, method = 'GET', data) => {
     const { protocol, hostname, port } = window.location;
 
@@ -18,6 +14,16 @@
 
     if (res.status !== 200) throw new Error(await res.json());
     else return res.json();
+  };
+
+  const renderView = async () => {
+    if (document.getElementById('user')) document.getElementById('user').remove();
+    try {
+      const tasks = await fetchAPI('/todos');
+      console.log(tasks);
+    } catch (ex) {
+      window.alert(ex.message);
+    }
   };
 
   document.forms.register.addEventListener('submit', async function (e) {
