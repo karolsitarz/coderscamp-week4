@@ -13,8 +13,8 @@
     <section id="todo">
       <div class="todo-container">
         <nav>
-          <form name="addTask" id="addTask">
-            <input type="text" maxlength="200" placeholder="Create a new task...">
+          <form name="addTask" id="addTask" autocomplete="off">
+            <input name="text" type="text" maxlength="200" placeholder="Create a new task...">
             <button type="submit">
 				<svg class="icon" viewBox="0 0 533.333 533.333">
 					<path d="M516.667,200H333.333V16.667C333.333,7.462,325.871,0,316.667,0h-100C207.462,0,200,7.462,200,16.667V200H16.667   C7.462,200,0,207.462,0,216.667v100c0,9.204,7.462,16.666,16.667,16.666H200v183.334c0,9.204,7.462,16.666,16.667,16.666h100   c9.204,0,16.667-7.462,16.667-16.666V333.333h183.333c9.204,0,16.667-7.462,16.667-16.666v-100   C533.333,207.462,525.871,200,516.667,200z" />
@@ -27,13 +27,7 @@
 			</svg>
         </nav>
         <div id="tasks">
-          <div class="tasks-single">
-            <div class="tasks-single-checkbox"></div>
-            <span class="tasks-single-desc">aaaaaaaaaaaaa</span>
-			<svg class="tasks-trash" viewBox="0 0 459 459">
-				<path d="M76.5,408c0,28.05,22.95,51,51,51h204c28.05,0,51-22.95,51-51V102h-306V408z M408,25.5h-89.25L293.25,0h-127.5l-25.5,25.5    H51v51h357V25.5z" />
-			</svg>
-          </div>
+          
         </div>
       </div>
     </section>
