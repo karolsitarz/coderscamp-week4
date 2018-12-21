@@ -10,7 +10,7 @@
       },
       body: data ? JSON.stringify(data) : null
     });
-    console.log(res);
+    // console.log(res);
 
     if (res.status !== 200) throw new Error(await res.json());
     else return res.json();

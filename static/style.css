@@ -43,6 +43,13 @@ section {
 
 #user {
   background: #2433404a;
+  z-index: 1;
+}
+#user ~ #todo {
+  filter: blur(.5em);
+}
+#todo {
+  transition: filter .3s ease;
 }
 
 .input-box {
@@ -57,11 +64,17 @@ section {
   left: 50%;
   top: 50%;
   transform: translate3d(-50%,-50%,0);
-  min-width: 35vw;
+  min-width: 50vw;
   max-width: 95vw;
   transition:
     opacity .3s ease,
     transform .3s ease;
+}
+@media screen and (max-width: 768px) {
+  .input-box {
+    width: 90vw;
+    padding: 3em 1em;
+  }
 }
 
 .input-container {
@@ -146,6 +159,10 @@ label[for="user-controller"] {
   align-items: center;
   padding: 2em;
   box-shadow: 0 1px #0000000F;
+  transition: opacity .3s ease;
+}
+.tasks-single[data-done] {
+  opacity: 0.5;
 }
 .tasks-single > .tasks-single-checkbox {
   height: 1.5em;
@@ -166,6 +183,7 @@ label[for="user-controller"] {
   height: 1.5rem;
   width: 1.5rem;
   fill: #fff;
+  flex-shrink: 0;
 }
 #addTask {
   display: flex;
@@ -186,6 +204,7 @@ label[for="user-controller"] {
 }
 #logout {
 	cursor: pointer;
+  margin-left: 2em;
 }
 .tasks-single-desc {
 	flex-grow: 1;
