@@ -19,13 +19,14 @@
       `<div class="tasks-single" ${status === 'active' ? '' : 'data-done'} data-todoid=${_id}><div class="tasks-single-checkbox"></div><span class="tasks-single-desc">${text}</span><svg class="tasks-trash" viewBox="0 0 459 459"><path d="M76.5,408c0,28.05,22.95,51,51,51h204c28.05,0,51-22.95,51-51V102h-306V408z M408,25.5h-89.25L293.25,0h-127.5l-25.5,25.5    H51v51h357V25.5z" /></svg></div>`);
   };
 
-  const renderView = async () => {
+  const renderView = async (name) => {
     try {
       const tasks = await fetchAPI('/todos');
       for (let task of tasks) {
         addTodo(task);
       }
       if (document.getElementById('user')) document.getElementById('user').remove();
+      document.forms.addTask.text.placeholder = `Hi there, ${name}!`;
     } catch (ex) {
       window.alert(ex.message);
     }
@@ -95,11 +96,11 @@
     e.preventDefault();
 
     try {
-      await fetchAPI('/auth', 'POST', {
+      const auth = await fetchAPI('/auth', 'POST', {
         email: this.email.value,
         password: this.password.value
       });
-      renderView();
+      renderView(auth.name);
     } catch (ex) {
       window.alert(ex.message);
     }
@@ -116,8 +117,8 @@
 
   if (document.cookie.includes('login-token')) {
     try {
-      await fetchAPI('/auth');
-      renderView();
+      const auth = await fetchAPI('/auth');
+      renderView(auth.name);
     } catch (ex) {
       window.alert(ex.message);
     }

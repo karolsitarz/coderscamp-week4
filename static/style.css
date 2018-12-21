@@ -201,11 +201,13 @@ label[for="user-controller"] {
   margin-left: 1em;
 }
 
-#addTask input[type="text"],
-#addTask input[type="text"]::placeholder {
-	color: #fff;
+#addTask input[type="text"] {
+  color: #fff;
 	font-weight: inherit;
 	flex-grow: 1;
+}
+#addTask input[type="text"]::placeholder {
+  color: #ffffff88;
 }
 #logout {
 	cursor: pointer;

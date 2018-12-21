@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
   // just a educational-purposes project, don't have to export secretKey to env
   const token = jwt.sign({ _id: user._id }, 'secretKey');
   // save the token as a cookie, for future authorization
-  res.cookie('login-token', token).json('You are logged in!');
+  res.cookie('login-token', token).json({ name: user.name, message: 'Successfully logged in' });
 });
 
 // log in through cookie
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
   let user = await User.findById(req.userID);
   if (!user) return res.status(400).clearCookie('login-token').json('Authentication by cookie unsuccessful.');
 
-  res.json('Successfully logged in.');
+  res.json({ name: user.name, message: 'Successfully logged in' });
 });
 
 module.exports = router;
