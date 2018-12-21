@@ -1,4 +1,8 @@
 (async function () {
+  const renderView = () => {
+    if (document.getElementById('user')) document.getElementById('user').remove();
+  };
+
   const fetchAPI = async (url, method = 'GET', data) => {
     const { protocol, hostname, port } = window.location;
 
@@ -10,20 +14,21 @@
       },
       body: data ? JSON.stringify(data) : null
     });
+    console.log(res);
 
-    if (res.status !== '200') throw new Error(res.statusText);
+    if (res.status !== 200) throw new Error(await res.json());
     else return res.json();
   };
 
   document.forms.register.addEventListener('submit', async function (e) {
     e.preventDefault();
     try {
-      const res = await fetchAPI('/users', 'POST', {
+      await fetchAPI('/users', 'POST', {
         name: this.name.value,
         email: this.email.value,
         password: this.password.value
       });
-      console.log(res);
+      renderView();
     } catch (ex) {
       window.alert(ex.message);
     }
@@ -33,24 +38,29 @@
     e.preventDefault();
 
     try {
-      const res = await fetchAPI('/auth', 'POST', {
+      await fetchAPI('/auth', 'POST', {
         email: this.email.value,
         password: this.password.value
       });
-      console.log(res);
+      renderView();
     } catch (ex) {
       window.alert(ex.message);
     }
   });
 
   document.getElementById('logout').addEventListener('click', async e => {
-    const res = await fetchAPI('/logout');
-    if (res.res === true) window.location.reload();
+    try {
+      await fetchAPI('/logout');
+      window.location.reload();
+    } catch (ex) {
+      window.alert(ex.message);
+    }
   });
 
   if (document.cookie.includes('login-token')) {
     try {
       await fetchAPI('/auth');
+      renderView();
     } catch (ex) {
       window.alert(ex.message);
     }
