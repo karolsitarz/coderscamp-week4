@@ -15,7 +15,7 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 :root {
-  --main: #4396ff;
+  --main: #91a5c1;
 }
 
 #wrapper {
@@ -134,7 +134,8 @@ label[for="user-controller"] {
 .todo-container > nav {
   padding: 1em;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   box-shadow: 0 0px 1em #00000015;
   color: #fff;
   background: var(--main);
@@ -155,4 +156,45 @@ label[for="user-controller"] {
 }
 .tasks-single input[type="checkbox"] {
   display: none;
+}
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  fill: #fff;
+}
+#addTask {
+  display: flex;
+  min-width: 60%;
+}
+#addTask button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-left: 1em;
+}
+
+#addTask input[type="text"],
+#addTask input[type="text"]::placeholder {
+	color: #fff;
+	font-weight: inherit;
+	flex-grow: 1;
+}
+#logout {
+	cursor: pointer;
+}
+.tasks-single-desc {
+	flex-grow: 1;
+}
+.tasks-trash {
+	fill: var(--main);
+    height: 1.25em;
+    width: 1.25em;
+	opacity: 0.3;
+	transform: scale(0.8);
+	transition: transform .3s ease, opacity .3s ease;
+	cursor: pointer;
+}
+.tasks-trash:hover {
+	transform: scale(1);
+	opacity: 1;
 }

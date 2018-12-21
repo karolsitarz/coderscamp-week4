@@ -20,6 +20,9 @@
     if (document.getElementById('user')) document.getElementById('user').remove();
     try {
       const tasks = await fetchAPI('/todos');
+      // for (let task of tasks) {
+
+      // }
       console.log(tasks);
     } catch (ex) {
       window.alert(ex.message);
