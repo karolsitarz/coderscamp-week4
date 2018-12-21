@@ -10,20 +10,13 @@
       },
       body: data ? JSON.stringify(data) : null
     });
-    // console.log(res);
 
     if (res.status !== 200) throw new Error(await res.json());
     else return res.json();
   };
   const addTodo = ({ text, status, _id }) => {
     document.getElementById('tasks').insertAdjacentHTML('beforeend',
-      `<div class="tasks-single" ${status === 'active' ? '' : 'data-done'} data-todoid=${_id}>
-    <div class="tasks-single-checkbox"></div>
-    <span class="tasks-single-desc">${text}</span>
-    <svg class="tasks-trash" viewBox="0 0 459 459">
-    <path d="M76.5,408c0,28.05,22.95,51,51,51h204c28.05,0,51-22.95,51-51V102h-306V408z M408,25.5h-89.25L293.25,0h-127.5l-25.5,25.5    H51v51h357V25.5z" />
-    </svg>
-    </div>`);
+      `<div class="tasks-single" ${status === 'active' ? '' : 'data-done'} data-todoid=${_id}><div class="tasks-single-checkbox"></div><span class="tasks-single-desc">${text}</span><svg class="tasks-trash" viewBox="0 0 459 459"><path d="M76.5,408c0,28.05,22.95,51,51,51h204c28.05,0,51-22.95,51-51V102h-306V408z M408,25.5h-89.25L293.25,0h-127.5l-25.5,25.5    H51v51h357V25.5z" /></svg></div>`);
   };
 
   const renderView = async () => {

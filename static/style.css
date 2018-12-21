@@ -135,7 +135,9 @@ label[for="user-controller"] {
   opacity: 0;
   pointer-events: none;
 }
-
+#tasks {
+  overflow: auto;
+}
 
 .todo-container {
   height: 100%;
@@ -143,6 +145,8 @@ label[for="user-controller"] {
   max-width: 900px;
   background: #fff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .todo-container > nav {
   padding: 1em;
@@ -152,6 +156,7 @@ label[for="user-controller"] {
   box-shadow: 0 0px 1em #00000015;
   color: #fff;
   background: var(--main);
+  flex-shrink: 0;
 }
 .tasks-single {
   display: flex;
