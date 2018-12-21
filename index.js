@@ -15,11 +15,12 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 app.use(express.json());
 app.use(require('cookie-parser')());
-app.use('/api/todos', authorize);
+app.use(['/api/todos', '/api/auth'], authorize);
 app.use('/api/users', users);
 app.use('/api/todos', todos);
 app.use('/api/auth', auth);
 app.use('/api/logout', logout);
+app.use('/', express.static('./static/'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on ${port}...`));
