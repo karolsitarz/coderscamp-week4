@@ -5,7 +5,7 @@ const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 
-// create user
+// log in through form
 router.post('/', async (req, res) => {
   const { error } =
     Joi.validate(req.body, {
@@ -29,9 +29,10 @@ router.post('/', async (req, res) => {
   res.cookie('login-token', token).json('You are logged in!');
 });
 
+// log in through cookie
 router.get('/', async (req, res) => {
   let user = await User.findById(req.userID);
-  if (!user) return res.status(400).json('Authentication by cookie unsuccessful.');
+  if (!user) return res.status(400).clearCookie('login-token').json('Authentication by cookie unsuccessful.');
 
   res.json('Successfully logged in.');
 });

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { User, validate } = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const authorize = require('../middleware/auth');
 
 // create user
@@ -23,7 +24,8 @@ router.post('/', authorize, async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  res.json({
+  const token = jwt.sign({ _id: user._id }, 'secretKey');
+  res.cookie('login-token', token).json({
     _id: user._id,
     name: user.name,
     email: user.email
